@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: Pal Filo Backend
+
+google:
+  api:
+    key: ${GOOGLE_API_KEY}
