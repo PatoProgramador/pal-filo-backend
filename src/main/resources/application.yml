@@ -3,7 +3,19 @@ spring:
     active: dev
   application:
     name: Pal Filo Backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+    dbname: ${DB_NAME}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+  api:
+    security:
+      secret: ${API_SECURITY_SECRET}
+  jpa:
+    hibernate:
+      dialect: ${JPA_HIBERNATE_DIALECT}
 
-google:
+maps:
   api:
     key: ${GOOGLE_API_KEY}
