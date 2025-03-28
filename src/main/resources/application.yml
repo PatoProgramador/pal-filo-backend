@@ -15,7 +15,11 @@ spring:
   jpa:
     hibernate:
       dialect: ${JPA_HIBERNATE_DIALECT}
+  server:
+    servlet:
+      context-path: ${SERVER_SERVLET_CONTEXT_PATH}
 
 maps:
   api:
     key: ${GOOGLE_API_KEY}
+CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
