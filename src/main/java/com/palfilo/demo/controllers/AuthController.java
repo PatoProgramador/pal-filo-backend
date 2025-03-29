@@ -23,7 +23,6 @@ public class AuthController {
 
     @PostMapping("/users")
     public ResponseEntity<UserCreatedDTO> createUser(@Valid @RequestBody NewUserDTO newUser) {
-        System.out.println("HOLAAA");
         return ResponseEntity.ok().body(usersService.createUser(newUser));
     }
 

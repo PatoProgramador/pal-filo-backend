@@ -5,5 +5,7 @@ import java.util.Optional;
 public record NewUserDTO (
         String email,
         Optional<String> password,
-        String firebaseUUID
+        String firebaseUUID,
+        Double latitude,
+        Double longitude
 ){}
