@@ -8,6 +8,6 @@ RUN mvn clean package -DskipTests
 # Etapa 2: Ejecución
 FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
-COPY --from=build /app/target/palfilo-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
