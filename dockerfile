@@ -10,14 +10,12 @@ RUN mvn dependency:go-offline
 COPY src ./src
 # Compila y empaqueta la aplicación
 RUN mvn clean package -DskipTests
-
-RUN ls -l /app/target/
 # Etapa 2: Ejecución
 FROM openjdk:17-jdk-alpine
 # Establece el directorio de trabajo
 WORKDIR /app
 # Copia el archivo JAR generado desde la etapa de construcción
-COPY --from=build /app/target/palfilo-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 # Comando para ejecutar la aplicación
 ENTRYPOINT ["java", "-jar", "app.jar"]
