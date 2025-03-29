@@ -10,12 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import com.palfilo.demo.models.Users;
-import com.palfilo.demo.DTO.AuthenticationDTO;
-import com.palfilo.demo.DTO.TokenDTO;
 
 import java.util.Optional;
 

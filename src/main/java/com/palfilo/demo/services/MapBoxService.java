@@ -1,49 +1,36 @@
-//package com.palfilo.demo.services;
-//
-//import com.fasterxml.jackson.databind.util.JSONPObject;
-//import com.palfilo.demo.DTO.RestaurantResponse;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.stereotype.Service;
-//import org.springframework.web.client.RestTemplate;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//
-//@Service
-//public class GooglePlacesService {
-//
-//    @Value("${google.api.key}")
-//    private String apiKey;
-//
-//    private final RestTemplate restTemplate = new RestTemplate();
+package com.palfilo.demo.services;
+import okhttp3.OkHttpClient;import okhttp3.Request;import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-//    public List<RestaurantResponse> buscarRestaurantes(double lat, double lng, int radius) {
-//        String url = String.format(
-//                "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%f,%f&radius=%d&type=restaurant&key=%s",
-//                lat, lng, radius, apiKey
-//        );
-//
-//        String response = restTemplate.getForObject(url, String.class);
-//        JSONPObject jsonResponse = new JSONPObject(response);
-//
-//        List<RestaurantResponse> restaurantes = new ArrayList<>();
-//        JSONArray results = jsonResponse.getJSONArray("results");
-//
-//        for (int i = 0; i < results.length(); i++) {
-//            JSONObject place = results.getJSONObject(i);
-//
-//            String name = place.getString("name");
-//            String address = place.optString("vicinity", "Dirección no disponible");
-//            double rating = place.optDouble("rating", 0.0);
-//            int userRatings = place.optInt("user_ratings_total", 0);
-//
-//            JSONObject location = place.getJSONObject("geometry").getJSONObject("location");
-//            double latitude = location.getDouble("lat");
-//            double longitude = location.getDouble("lng");
-//
-//            restaurantes.add(new RestaurantResponse(name, address, rating, userRatings, latitude, longitude));
-//        }
-//
-//        return restaurantes;
-//    }
-//}
+import java.io.IOException;
+
+@Service
+public class MapBoxService {
+    @Value("${MAP_BOX_API_KEY}")
+    private String MAPBOX_API_KEY;
+
+    final String MAPBOX_API_URL = "https://api.mapbox.com/search/searchbox/v1/category/restaurant?";
+
+    public String getNearRestaurants(double latitude, double longitude) throws IOException {
+        int limit = 10;
+        String bbox = (longitude - 0.05) + "," + (latitude - 0.05) + "," +
+                (longitude + 0.05) + "," + (latitude + 0.05);
+
+        String url = MAPBOX_API_URL +
+                "proximity=" + longitude + "," + latitude +
+                "&bbox=" + bbox +
+                "&limit=" + limit +
+                "&access_token=" + MAPBOX_API_KEY;
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url).build();
+        Response response = client.newCall(request).execute();
+
+        if (response.isSuccessful() && response.body() != null) {
+            return response.body().string();
+        } else {
+            throw new IOException("Error al obtener los restaurantes: " + response.message());
+        }
+    }
+}
