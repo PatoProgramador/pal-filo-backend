@@ -29,22 +29,18 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.replace("Bearer ", "");
-            try {
-                String subject = tokenService.getSubject(token);
-                if (subject != null) {
-                    UserDetails user = authenticationService.loadUserByUsername(subject);
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            user,
-                            null,
-                            user.getAuthorities()
-                    );
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-            } catch (RuntimeException e) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Token inválido o expirado");
-                return;
+
+            String subject = tokenService.getSubject(token);
+            if (subject != null) {
+                UserDetails user = authenticationService.loadUserByUsername(subject);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        user,
+                        null,
+                        user.getAuthorities()
+                );
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+
         }
         filterChain.doFilter(request, response);
     }
