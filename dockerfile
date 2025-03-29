@@ -11,7 +11,7 @@ COPY src ./src
 # Compila y empaqueta la aplicación
 RUN mvn clean package -DskipTests
 # Etapa 2: Ejecución
-FROM openjdk:17-jdk-alpine
+FROM openjdk:21-jdk-alpine
 # Establece el directorio de trabajo
 WORKDIR /app
 # Copia el archivo JAR generado desde la etapa de construcción
