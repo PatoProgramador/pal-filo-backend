@@ -10,6 +10,8 @@ RUN mvn dependency:go-offline
 COPY src ./src
 # Compila y empaqueta la aplicación
 RUN mvn clean package -DskipTests
+
+RUN ls -l /app/target/
 # Etapa 2: Ejecución
 FROM openjdk:17-jdk-alpine
 # Establece el directorio de trabajo
