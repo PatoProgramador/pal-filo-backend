@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 import org.locationtech.jts.geom.Point;
 
@@ -24,4 +25,13 @@ public interface RestaurantRepository extends JpaRepository<Restaurants, Integer
                         @Param("name") String name,
                         @Param("openingHours") String openingHours,
                         @Param("updatedAt") Timestamp updatedAt);
+
+    @Query(value = """
+        SELECT r.*, ST_Distance(r.location::geography, lp.location::geography) AS distance
+        FROM core.restaurants r
+        JOIN auth.location_permissions lp ON lp.user_id = :userId
+        WHERE ST_DWithin(r.location::geography, lp.location::geography, 5000)
+        ORDER BY distance ASC
+    """, nativeQuery = true)
+    List<Restaurants> findNearbyRestaurants(@Param("userId") Integer userId);
 }

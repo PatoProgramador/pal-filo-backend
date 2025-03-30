@@ -43,6 +43,8 @@ public class CreateNearRestaurantsListener {
                                                         objectMapper.writeValueAsString(restaurant.getOpeningHours()),
                                                         restaurant.getUpdatedAt());
                     logger.info("Created new restaurant with name: " + restaurant.getName());
+                } else {
+                    logger.info("Restaurant with name: '" + restaurant.getName() + "' already exists");
                 }
             }
         } catch (IOException e) {
