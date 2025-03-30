@@ -2,8 +2,9 @@ package com.palfilo.demo.DTO.MapBox;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record MetadataDTO(
-        String website,
-        OpenHoursDTO open_hours
+public record OpenHoursDTO(
+        List<PeriodDTO> periods
 ) {}
