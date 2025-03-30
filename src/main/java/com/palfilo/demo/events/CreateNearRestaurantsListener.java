@@ -42,7 +42,7 @@ public class CreateNearRestaurantsListener {
                                                         restaurant.getName(),
                                                         objectMapper.writeValueAsString(restaurant.getOpeningHours()),
                                                         restaurant.getUpdatedAt());
-                    logger.info("[Create Near Restaurants Listener] Created new restaurant with id" + restaurant.getRestaurantId());
+                    logger.info("Created new restaurant with name: " + restaurant.getName());
                 }
             }
         } catch (IOException e) {
