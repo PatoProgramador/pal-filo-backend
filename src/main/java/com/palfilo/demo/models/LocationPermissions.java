@@ -18,7 +18,6 @@ import java.sql.Timestamp;
 public class LocationPermissions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "permission_id")
     private Integer permissionId;
     private Boolean allowed;
