@@ -10,7 +10,6 @@ import com.palfilo.demo.models.Users;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -24,17 +23,14 @@ public class UsersService {
     private LocationPermissionsRepository locationPermissionsRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public UserCreatedDTO createUser(NewUserDTO newUser){
         Users user = new Users(newUser);
         if (newUser.password().isEmpty()) {
-            user.setPassword(passwordEncoder.encode(newUser.firebaseUUID()));
-        } else user.setPassword(passwordEncoder.encode(newUser.password().get()));
+            user.setPassword(newUser.firebaseUUID());
+        } else user.setPassword(newUser.password().get());
         usersRepository.save(user);
 
         Integer userId = user.getUserId();

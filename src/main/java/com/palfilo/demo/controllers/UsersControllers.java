@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/users")
 public class UsersControllers {
