@@ -1,5 +1,6 @@
 package com.palfilo.demo.controllers;
 
+import com.palfilo.demo.DTO.AuthenticationDTO;
 import com.palfilo.demo.DTO.NewUserDTO;
 import com.palfilo.demo.DTO.UserCreatedDTO;
 import com.palfilo.demo.services.UsersService;
@@ -14,6 +15,10 @@ public class AuthController {
     @Autowired
     private UsersService usersService;
 
+    @PostMapping
+    public ResponseEntity<UserCreatedDTO> login(@Valid @RequestBody AuthenticationDTO authenticationDTO) {
+        return ResponseEntity.ok().body(usersService.getUserById(authenticationDTO));
+    }
 
     @PostMapping("/users")
     public ResponseEntity<UserCreatedDTO> createUser(@Valid @RequestBody NewUserDTO newUser) {

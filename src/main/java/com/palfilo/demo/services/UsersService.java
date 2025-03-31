@@ -1,5 +1,6 @@
 package com.palfilo.demo.services;
 
+import com.palfilo.demo.DTO.AuthenticationDTO;
 import com.palfilo.demo.DTO.NewUserDTO;
 import com.palfilo.demo.DTO.UserCreatedDTO;
 import com.palfilo.demo.daos.LocationPermissionsRepository;
@@ -11,6 +12,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -40,6 +43,23 @@ public class UsersService {
 
         eventPublisher.publishEvent(new CreateNearRestaurantsEvent(this, newUser.latitude(), newUser.longitude()));
 
+        return new UserCreatedDTO(userId);
+    }
+
+    public UserCreatedDTO getUserById(AuthenticationDTO authenticationDTO) {
+        Integer userId = 0;
+        if (authenticationDTO.email() != null && authenticationDTO.password() != null) {
+            Optional<Users> user = usersRepository.findByEmail(authenticationDTO.email());
+            if (user.isPresent()) {
+                System.out.println(user.get().getUserId());
+                userId = user.get().getUserId();
+            }
+        } else if (authenticationDTO.firebaseUUID() != null) {
+            Optional<Users> user = usersRepository.findByFirebaseUUID(authenticationDTO.firebaseUUID());
+            if (user.isPresent()) {
+                userId = user.get().getUserId();
+            }
+        }
         return new UserCreatedDTO(userId);
     }
 }
