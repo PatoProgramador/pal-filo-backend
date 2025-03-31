@@ -9,16 +9,20 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
     dbname: ${DB_NAME}
     driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
-  api:
-    security:
-      secret: ${API_SECURITY_SECRET}
   jpa:
     hibernate:
       dialect: ${JPA_HIBERNATE_DIALECT}
   server:
+    port: ${SERVER_PORT}
     servlet:
       context-path: ${SERVER_SERVLET_CONTEXT_PATH}
+
+jwt:
+  secret: ${API_SECURITY_SECRET}
+
 maps:
   api:
     key: ${MAP_BOX_API_KEY}
-CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS}
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS}
